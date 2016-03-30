@@ -1,0 +1,6 @@
+{
+    "dataSource": ["广东省","北京市", "上海市", "湖南省"],
+    "dataSourcePath": "",
+    "depth":3,
+    "defaultSelected": ["北京市"]
+}

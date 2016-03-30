@@ -1,0 +1,89 @@
+{
+	"components":1,
+	"defaultSelected":[],
+	"dataSource":[
+		{
+			"Code": "1",
+			"Name": "广东省",
+			"Child":[
+				{
+					"Code": "1-1",
+					"Name": "广州市",
+					"Child": []
+				},
+				{
+					"Code": "1-2",
+					"Name": "深圳市",
+					"Child": []
+				},
+				{
+					"Code": "1-3",
+					"Name": "肇庆市",
+					"Child": []
+				},
+				{
+					"Code": "1-4",
+					"Name": "东莞市",
+					"Child": []
+				},
+				{
+					"Code": "1-5",
+					"Name": "佛山市",
+					"Child": []
+				}
+			]
+		},
+		{
+			"Code": "2",
+			"Name": "北京市",
+			"Child":[
+				{
+					"Code": "2-1",
+					"Name": "东城区",
+					"Child": []
+				},
+				{
+					"Code": "2-2",
+					"Name": "西城区",
+					"Child": []
+				},
+				{
+					"Code": "2-3",
+					"Name": "宣武区",
+					"Child": []
+				},
+				{
+					"Code": "2-4",
+					"Name": "海淀区",
+					"Child": []
+				},
+				{
+					"Code": "2-5",
+					"Name": "朝阳区",
+					"Child": []
+				}
+			]
+		},
+		{
+			"Code": "4",
+			"Name": "湖南省",
+			"Child":[
+				{
+					"Code": "4-1",
+					"Name": "长沙市",
+					"Child": []
+				},
+				{
+					"Code": "4-2",
+					"Name": "株洲市",
+					"Child": []
+				}
+			]
+		},
+		{
+			"Code": "5",
+			"Name": "南沙群岛",
+			"Child":[]
+		}
+	]
+}

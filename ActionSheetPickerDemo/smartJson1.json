@@ -1,0 +1,31 @@
+{
+	"dataSource":[
+		{
+			"Code": "1",
+			"Name": "广东省",
+			"Child":[]
+		},
+		{
+			"Code": "2",
+			"Name": "北京市",
+			"Child":[]
+		},
+		{
+			"Code": "3",
+			"Name": "上海市",
+			"Child":[]
+		},
+		{
+			"Code": "4",
+			"Name": "湖南省",
+			"Child":[]
+		},
+		{
+			"Code": "5",
+			"Name": "湖北省",
+			"Child":[]
+		}
+	],
+	"components":1,
+	"defaultSelected":[]
+}
