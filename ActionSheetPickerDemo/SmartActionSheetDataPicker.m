@@ -375,7 +375,7 @@
     NSInteger reloadComponent = component+1;
     if (reloadComponent < _numberOfComponents && array.count > 0) {
         [self setUserSelectedValue:[array objectAtIndex:0] inComponent:reloadComponent];
-    }else{
+    }else if(reloadComponent < _numberOfComponents && array.count == 0){
         [self setUserSelectedValue:[NSDictionary dictionary] inComponent:reloadComponent];
     }
     
