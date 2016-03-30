@@ -5,6 +5,7 @@ it could auto generate 1-n components.
 there are two ways base on different data. in the project, I have write the two demo how to use it.
 
 1. ActionSheetDataPicker
+
     ActionSheetDataPicker *picker= [[ActionSheetDataPicker alloc] initWithTitle:@"选择" initialSelection:nil     doneBlock:^(ActionSheetDataPicker *picker, id selectedData, id origin) {
         NSLog(@"User select: ");
         NSArray *array = (NSArray *)selectedData;
@@ -25,6 +26,7 @@ there are two ways base on different data. in the project, I have write the two 
 
 
 2. SmartActionSheetDataPicker 
+
     SmartActionSheetDataPicker *picker = [SmartActionSheetDataPicker showPickerWithTitle:@"Address Picker" initialSelection:nil doneBlock:^(SmartActionSheetDataPicker *picker, id selectedData, id origin) {
         NSArray *array = (NSArray *)selectedData;
         NSLog(@"User select: ");
