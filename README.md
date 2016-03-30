@@ -61,4 +61,12 @@ this is a demo to use it:
     [picker showActionSheetPicker];
 
 
-welcome to contact me if you have any questions.
+## Screenshots
+![ActionSheetPicker](https://github.com/chgsh2008/ActionSheetPicker/blob/master/Screenshot/one.png?raw=true "ActionSheetPicker")
+![ActionSheetPicker](https://github.com/chgsh2008/ActionSheetPicker/blob/master/Screenshot/two.png?raw=true "ActionSheetPicker")
+![ActionSheetPicker](https://github.com/chgsh2008/ActionSheetPicker/blob/master/Screenshot/three.png?raw=true "ActionSheetPicker")
+![ActionSheetPicker](https://github.com/chgsh2008/ActionSheetPicker/blob/master/Screenshot/fouth.png?raw=true "ActionSheetPicker")
+![ActionSheetPicker](https://github.com/chgsh2008/ActionSheetPicker/blob/master/Screenshot/five.png?raw=true "ActionSheetPicker")
+
+
+welcome to contact me if you have any questions. my QQ: 993301724
