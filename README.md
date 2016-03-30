@@ -6,6 +6,8 @@ there are two ways base on different data. in the project, I have write the two 
 
 1. ActionSheetDataPicker
 
+this is a demo to use it:
+
     ActionSheetDataPicker *picker= [[ActionSheetDataPicker alloc] initWithTitle:@"选择" initialSelection:nil     doneBlock:^(ActionSheetDataPicker *picker, id selectedData, id origin) {
         NSLog(@"User select: ");
         NSArray *array = (NSArray *)selectedData;
@@ -25,7 +27,9 @@ there are two ways base on different data. in the project, I have write the two 
 
 
 
-2. SmartActionSheetDataPicker 
+2. SmartActionSheetDataPicker
+
+this is a demo to use it:
 
     SmartActionSheetDataPicker *picker = [SmartActionSheetDataPicker showPickerWithTitle:@"Address Picker" initialSelection:nil doneBlock:^(SmartActionSheetDataPicker *picker, id selectedData, id origin) {
         NSArray *array = (NSArray *)selectedData;
