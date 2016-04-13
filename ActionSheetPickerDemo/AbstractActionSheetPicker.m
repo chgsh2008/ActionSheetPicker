@@ -89,7 +89,7 @@ CG_INLINE BOOL isIPhone4() {
 @property(nonatomic, strong) UIBarButtonItem *barButtonItem;
 @property(nonatomic, strong) UIBarButtonItem *doneBarButtonItem;
 @property(nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
-@property(nonatomic, strong) UIView *containerView;
+@property(nonatomic, strong) UIView *originView;
 @property(nonatomic, unsafe_unretained) id target;
 @property(nonatomic, assign) SEL successAction;
 @property(nonatomic, assign) SEL cancelAction;
@@ -178,7 +178,7 @@ CG_INLINE BOOL isIPhone4() {
         if ([origin isKindOfClass:[UIBarButtonItem class]])
             self.barButtonItem = origin;
         else if ([origin isKindOfClass:[UIView class]])
-            self.containerView = origin;
+            self.originView = origin;
 //        else
 //            NSAssert(NO, @"Invalid origin provided to ActionSheetPicker ( %@ )", origin);
     }
@@ -599,7 +599,7 @@ CG_INLINE BOOL isIPhone4() {
 - (id)storedOrigin {
     if (self.barButtonItem)
         return self.barButtonItem;
-    return self.containerView;
+    return self.originView;
 }
 
 #pragma mark - Popovers and ActionSheets
@@ -674,23 +674,25 @@ CG_INLINE BOOL isIPhone4() {
 - (void)presentPopover:(UIPopoverController *)popover {
     NSParameterAssert(popover != NULL);
     if (self.barButtonItem) {
-        if (_containerView != nil) {
-            [popover presentPopoverFromRect:CGRectMake(_containerView.frame.size.width / 2.f, 0.f, 0, 0) inView:_containerView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        if (_originView != nil) {
+            [popover presentPopoverFromRect:CGRectMake(_originView.frame.size.width / 2.f, 0.f, 0, 0) inView:_originView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         } else {
             [popover presentPopoverFromBarButtonItem:_barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }
 
         return;
     }
-    else if ((self.containerView)) {
+    else if ((self.originView)) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [popover presentPopoverFromRect:_containerView.bounds inView:_containerView
+//            [popover presentPopoverFromRect:CGRectMake(_originView.center.x-130, _originView.center.y+160, 320, 260)  inView:_originView
+//                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            [popover presentPopoverFromRect:_originView.bounds  inView:_originView
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         });
         return;
     }else if (self.controllerView) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [popover presentPopoverFromRect:CGRectMake(self.controllerView.center.x/2.0, self.controllerView.center.y/2.0-160, 320, 260) inView:self.controllerView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            [popover presentPopoverFromRect:CGRectMake(self.controllerView.center.x - 130, self.controllerView.center.y-160, 320, 260) inView:self.controllerView permittedArrowDirections:0 animated:YES];
         });
         return;
     }
@@ -698,7 +700,7 @@ CG_INLINE BOOL isIPhone4() {
     UIView *origin = nil;
     CGRect presentRect = CGRectZero;
     @try {
-        origin = (_containerView.superview ? _containerView.superview : _containerView);
+        origin = (_originView.superview ? _originView.superview : _originView);
         presentRect = origin.bounds;
         dispatch_async(dispatch_get_main_queue(), ^{
             [popover presentPopoverFromRect:presentRect inView:origin
