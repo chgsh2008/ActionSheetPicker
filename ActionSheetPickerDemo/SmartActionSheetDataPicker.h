@@ -1,6 +1,6 @@
 //
 //  SmartActionSheetDataPicker.h
-//  ActionSheetPickerDemo
+//  SmartActionSheetPicker
 //
 //  Created by Kevin on 16/3/29.
 //  Copyright © 2016年 Kevin. All rights reserved.
@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AbstractActionSheetPicker.h"
 
-static NSString *const CodeElement   = @"Code";
-static NSString *const NameElement   = @"Name";
-static NSString *const ChildElement    = @"Child";
+
 
 typedef enum _SearchKeyElement{
     OnlyByCodeElement = 0,
@@ -60,6 +58,10 @@ typedef void(^SmartActionSheetDataCancelBlock)(SmartActionSheetDataPicker *picke
  */
 @property (nonatomic, assign) SearchKeyElement searchKeyElement;
 
+@property (nonatomic, strong) NSString *codeElement;
+@property (nonatomic, strong) NSString *nameElement;
+@property (nonatomic, strong) NSString *childElement;
+
 
 /**
  *  Show picker
@@ -72,11 +74,14 @@ typedef void(^SmartActionSheetDataCancelBlock)(SmartActionSheetDataPicker *picke
  *
  *  @return
  */
-+ (instancetype)showPickerWithTitle:(NSString *)title
-                   initialSelection:(NSArray *)initialSelection
-                          doneBlock:(SmartActionSheetDataDoneBlock)doneBlock
-                        cancelBlock:(SmartActionSheetDataCancelBlock)cancelBlock
-                             origin:(UIView*)view;
++ (instancetype)smartPickerWithTitle:(NSString *)title
+                         codeElement:(NSString *)codeElement
+                         nameElement:(NSString *)nameElement
+                        childElement:(NSString *)childElement
+                    initialSelection:(NSArray *)initialSelection
+                           doneBlock:(SmartActionSheetDataDoneBlock)doneBlock
+                         cancelBlock:(SmartActionSheetDataCancelBlock)cancelBlock
+                              origin:(UIView*)view;
 
 
 /**
@@ -91,6 +96,9 @@ typedef void(^SmartActionSheetDataCancelBlock)(SmartActionSheetDataPicker *picke
  *  @return
  */
 - (instancetype)initWithTitle:(NSString *)title
+                  codeElement:(NSString *)codeElement
+                  nameElement:(NSString *)nameElement
+                 childElement:(NSString *)childElement
              initialSelection:(NSArray *)initialSelection
                     doneBlock:(SmartActionSheetDataDoneBlock)doneBlock
                   cancelBlock:(SmartActionSheetDataCancelBlock)cancelBlock

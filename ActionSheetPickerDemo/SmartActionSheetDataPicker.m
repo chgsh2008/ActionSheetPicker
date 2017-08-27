@@ -31,13 +31,16 @@
  *
  *  @return
  */
-+ (instancetype)showPickerWithTitle:(NSString *)title
++ (instancetype)smartPickerWithTitle:(NSString *)title
+                        codeElement:(NSString *)codeElement
+                        nameElement:(NSString *)nameElement
+                       childElement:(NSString *)childElement
                    initialSelection:(NSArray *)initialSelection
                           doneBlock:(SmartActionSheetDataDoneBlock)doneBlock
                         cancelBlock:(SmartActionSheetDataCancelBlock)cancelBlock
                              origin:(UIView*)view
 {
-    SmartActionSheetDataPicker *picker = [[SmartActionSheetDataPicker alloc] initWithTitle:title initialSelection:initialSelection doneBlock:doneBlock cancelBlock:cancelBlock origin:view];
+    SmartActionSheetDataPicker *picker = [[SmartActionSheetDataPicker alloc] initWithTitle:title codeElement:codeElement nameElement:nameElement childElement:childElement initialSelection:initialSelection doneBlock:doneBlock cancelBlock:cancelBlock origin:view];
     
     return picker;
 }
@@ -55,6 +58,9 @@
  *  @return
  */
 - (instancetype)initWithTitle:(NSString *)title
+                  codeElement:(NSString *)codeElement
+                  nameElement:(NSString *)nameElement
+                 childElement:(NSString *)childElement
              initialSelection:(NSArray *)initialSelection
                     doneBlock:(SmartActionSheetDataDoneBlock)doneBlock
                   cancelBlock:(SmartActionSheetDataCancelBlock)cancelBlock
@@ -64,6 +70,9 @@
     if (self) {
         self.onSmartActionSheetDone = doneBlock;
         self.onSmartActionSheetCancel = cancelBlock;
+        self.codeElement = codeElement;
+        self.nameElement = nameElement;
+        self.childElement = childElement;
     }
     return self;
 }
@@ -95,11 +104,11 @@
 -(void)getChildData:(NSArray *)dictioinary inComponent:(NSInteger)component inRow:(NSInteger)row result:(void(^)(NSArray *childData, NSInteger numberOfChild, NSDictionary *rowData))result
 {
     if ([dictioinary isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"this is a dictionary");
+//        NSLog(@"this is a dictionary");
     }else if ([dictioinary isKindOfClass:[NSArray class]]){
         if (dictioinary.count > 0 && dictioinary.count > row) {
             NSDictionary *dict = [dictioinary objectAtIndex:row];
-            NSArray *childArray = [dict objectForKey:ChildElement];
+            NSArray *childArray = [dict objectForKey:_childElement];
             if (result!=nil) {
                 result(childArray, childArray.count, dict);
             }
@@ -124,16 +133,16 @@
  */
 -(void)findChild:(NSArray *)parentDict keyDict:(NSDictionary *)keyDict result:(void(^)(NSArray *childData, NSInteger rowIndex, NSDictionary *rowData))result
 {
-    NSString *keyCode = [keyDict objectForKey:CodeElement];
-    NSString *keyName = [keyDict objectForKey:NameElement];
+    NSString *keyCode = [keyDict objectForKey:_codeElement];
+    NSString *keyName = [keyDict objectForKey:_nameElement];
     if ([parentDict isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"this is a dictionary");
+//        NSLog(@"this is a dictionary");
     }else if ([parentDict isKindOfClass:[NSArray class]]){
         if (parentDict.count > 0) {
             for (int i = 0; i < parentDict.count; i++) {
                 NSDictionary *tmpDict = [parentDict objectAtIndex:i];
-                NSString *tmpCode = [tmpDict objectForKey:CodeElement];
-                NSString *tmpName = [tmpDict objectForKey:NameElement];
+                NSString *tmpCode = [tmpDict objectForKey:_codeElement];
+                NSString *tmpName = [tmpDict objectForKey:_nameElement];
                 BOOL isExist = NO;
                 if (_searchKeyElement == OnlyByCodeElement) {
                     if ([keyCode isEqual:tmpCode]) {
@@ -150,7 +159,7 @@
                 }
                 if (isExist) {
                     if (result != nil) {
-                        result([tmpDict objectForKey:ChildElement], i, tmpDict);
+                        result([tmpDict objectForKey:_childElement], i, tmpDict);
                     }
                     break;
                 }
@@ -178,7 +187,7 @@
         NSInteger index = 0;
         NSString *empty = @"";
         while (index < _numberOfComponents) {
-            NSDictionary *emptyDict = [NSDictionary dictionaryWithObjectsAndKeys:empty, CodeElement, empty, NameElement, nil];
+            NSDictionary *emptyDict = [NSDictionary dictionaryWithObjectsAndKeys:empty, _codeElement, empty, _nameElement, nil];
             [_userSelected addObject:emptyDict];
             index++;
         }
@@ -189,7 +198,7 @@
             }
             [self findChild:data keyDict:defaultDict result:^(NSArray *childData, NSInteger rowIndex, NSDictionary *rowData) {
                 data = childData;
-                NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[rowData objectForKey:CodeElement], CodeElement, [rowData objectForKey:NameElement], NameElement, nil];
+                NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[rowData objectForKey:_codeElement], _codeElement, [rowData objectForKey:_nameElement], _nameElement, nil];
                 [weakSelf.userSelected replaceObjectAtIndex:i withObject:defaultStr];
                 if (i+1<_numberOfComponents) {
                     [weakSelf.childShowDictionary setObject:childData forKey:@(i+1)];
@@ -203,8 +212,8 @@
         for (int i = 0; i < _numberOfComponents; i++) {
             [self getChildData:data inComponent:i inRow:0 result:^(NSArray *childData, NSInteger numberOfChild, NSDictionary *rowData) {
                 data = childData;
-                NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[rowData objectForKey:CodeElement], CodeElement, [rowData objectForKey:NameElement], NameElement, nil];
-                NSLog(@"defalt component：%d, value：%@",i, [defaultStr objectForKey:NameElement]);
+                NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[rowData objectForKey:_codeElement], _codeElement, [rowData objectForKey:_nameElement], _nameElement, nil];
+                NSLog(@"defalt component：%d, value：%@",i, [defaultStr objectForKey:_nameElement]);
                 [weakSelf.userSelected addObject:defaultStr];
                 [weakSelf.userSelectedComponentRow setObject:@(0) forKey:@(i)];
                 if (i+1<_numberOfComponents) {
@@ -218,7 +227,7 @@
 
 -(void)setUserSelectedValue:(NSDictionary *)selectedDict inComponent:(NSInteger)component
 {
-    NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[selectedDict objectForKey:CodeElement], CodeElement, [selectedDict objectForKey:NameElement], NameElement, nil];
+    NSDictionary *defaultStr = [NSDictionary dictionaryWithObjectsAndKeys:[selectedDict objectForKey:_codeElement], _codeElement, [selectedDict objectForKey:_nameElement], _nameElement, nil];
     [self.userSelected replaceObjectAtIndex:component withObject:defaultStr];
 }
 
@@ -329,7 +338,7 @@
     NSArray *array = [_childShowDictionary objectForKey:@(component)];
     if (_childShowDictionary.count <= 0 || component == 0 || array == nil) {
         [self getChildData:_dataSource inComponent:component inRow:row result:^(NSArray *childData, NSInteger numberOfChild, NSDictionary *rowData) {
-            text = [rowData objectForKey:NameElement];
+            text = [rowData objectForKey:_nameElement];
         }];
     }else{
         if (array.count > row) {
@@ -337,7 +346,7 @@
             if ([value isKindOfClass:[NSString class]]) {
 //                text = value;
             }else if ([value isKindOfClass:[NSDictionary class]]){
-                text = [value objectForKey:NameElement];
+                text = [value objectForKey:_nameElement];
             }
         }else{
             NSLog(@"超出界线, 列：%ld, 行：%ld", component, row);
@@ -360,8 +369,10 @@
         NSArray *arrTmp = [_childShowDictionary objectForKey:@(component)];
         if (arrTmp.count > row) {
             NSDictionary *dictTmp = [arrTmp objectAtIndex:row];
-            array = [dictTmp objectForKey:ChildElement];
-            [_childShowDictionary setObject:array forKey:@(component+1)];
+            array = [dictTmp objectForKey:_childElement];
+            if (array != nil && [array isKindOfClass:[NSArray class]]) {
+                [_childShowDictionary setObject:array forKey:@(component+1)];
+            }
             [self setUserSelectedValue:dictTmp inComponent:component];
         }
     }else{

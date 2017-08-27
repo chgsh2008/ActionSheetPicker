@@ -8,6 +8,12 @@
 
 #import "ViewController.h"
 
+
+
+static NSString *const CityPickerCodeElement   = @"Code";
+static NSString *const CityPickerNameElement   = @"Name";
+static NSString *const CityPickerChildElement    = @"Child";
+
 @interface ViewController ()
 
 @end
@@ -96,19 +102,19 @@
         return;
     }
     
-    SmartActionSheetDataPicker *picker = [SmartActionSheetDataPicker showPickerWithTitle:@"Address Picker" initialSelection:nil doneBlock:^(SmartActionSheetDataPicker *picker, id selectedData, id origin) {
+    SmartActionSheetDataPicker *picker = [SmartActionSheetDataPicker smartPickerWithTitle:@"城市选择器" codeElement:CityPickerCodeElement nameElement:CityPickerNameElement childElement:CityPickerChildElement initialSelection:nil doneBlock:^(SmartActionSheetDataPicker *picker, id selectedData, id origin) {
         NSArray *array = (NSArray *)selectedData;
         NSLog(@"User select: ");
         for (int i = 0; i < array.count; i++) {
             NSDictionary *dict = [array objectAtIndex:i];
-            NSLog(@"%d %@", i, [dict objectForKey:NameElement]);
+            NSLog(@"%d %@ %@", i, [dict objectForKey:CityPickerCodeElement], [dict objectForKey:CityPickerNameElement]);
         }
     } cancelBlock:^(SmartActionSheetDataPicker *picker) {
         
     } origin:sender];
     
-    NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"5", CodeElement, @"南沙群岛", NameElement, nil];
-    NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"4-2", CodeElement, @"株洲市", NameElement, nil];
+    NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"5", CityPickerCodeElement, @"南沙群岛", CityPickerNameElement, nil];
+    NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"4-2", CityPickerCodeElement, @"株洲市", CityPickerNameElement, nil];
     NSArray *defaultArr = [NSArray arrayWithObjects:dict1, nil];
     picker.controllerView = self.view;
     picker.defaultSelected = defaultArr;
