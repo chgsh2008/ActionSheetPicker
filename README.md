@@ -2,7 +2,7 @@
 this is a smart actionsheetpicker 
 it could auto generate 1-n components. 
 ### ActionSheetPicker = UIPickerView + UIActionSheet ##
-(iOS 5.1.1-9.x compatible!)
+(iOS 5.1.1-12.x compatible!)
 
 
 Well, that's how it started. Now, the following is more accurate:
